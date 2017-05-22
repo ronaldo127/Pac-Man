@@ -43,8 +43,11 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        transform.position += new Vector3(moveDirection.x, moveDirection.y) * Time.deltaTime;
+    }
 
+    private void FixedUpdate()
+    {
+        transform.position += new Vector3(moveDirection.x, moveDirection.y) * Time.deltaTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

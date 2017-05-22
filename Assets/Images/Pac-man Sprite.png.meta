@@ -1,17 +1,17 @@
 fileFormatVersion: 2
-guid: 4b42a1be56c3add41a4ed4b05ee9f791
-timeCreated: 1495481739
+guid: 2b6be2c17aa4d5a4d92c5142d21512a5
+timeCreated: 1495485831
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: pacmanmoving_0
-    21300002: pacmanmoving_1
-    21300004: pacmanmoving_2
-    21300006: pacmanmoving_3
-    21300008: pacmanmoving_4
-    21300010: pacmanmoving_5
-    21300012: pacmanmoving_6
-    21300014: pacmanmoving_7
+    21300000: temp_0
+    21300002: temp_1
+    21300004: temp_2
+    21300006: temp_3
+    21300008: temp_4
+    21300010: temp_5
+    21300012: temp_6
+    21300014: temp_7
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -86,104 +86,104 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pacmanmoving_0
+      name: temp_0
       rect:
         serializedVersion: 2
         x: 0
         y: 47
         width: 15
-        height: 14
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: pacmanmoving_1
+      name: temp_1
       rect:
         serializedVersion: 2
         x: 17
         y: 47
         width: 15
-        height: 14
-      alignment: 9
-      pivot: {x: 0.53484523, y: 0.50000024}
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: pacmanmoving_2
+      name: temp_2
       rect:
         serializedVersion: 2
         x: 3
         y: 31
         width: 15
-        height: 14
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: pacmanmoving_3
+      name: temp_3
       rect:
         serializedVersion: 2
         x: 17
         y: 31
         width: 15
-        height: 14
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: pacmanmoving_4
+      name: temp_4
       rect:
         serializedVersion: 2
         x: 2
-        y: 14
+        y: 13
         width: 15
-        height: 14
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: pacmanmoving_5
+      name: temp_5
       rect:
         serializedVersion: 2
         x: 17
-        y: 16
+        y: 15
         width: 15
-        height: 14
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: pacmanmoving_6
+      name: temp_6
       rect:
         serializedVersion: 2
         x: 2
         y: 1
         width: 15
-        height: 14
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: pacmanmoving_7
+      name: temp_7
       rect:
         serializedVersion: 2
         x: 17
         y: 0
         width: 15
-        height: 14
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
