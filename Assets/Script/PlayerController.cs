@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     public Vector2 moveDirection = Vector2.right;
+    public float speed = 1.0f;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        transform.position += new Vector3(moveDirection.x, moveDirection.y) * Time.deltaTime;
+        transform.position += new Vector3(moveDirection.x, moveDirection.y) * speed * Time.deltaTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
