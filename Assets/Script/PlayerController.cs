@@ -7,9 +7,25 @@ public class PlayerController : MonoBehaviour {
     public Vector2 moveDirection = Vector2.right;
     public float speed = 1.0f;
 
+	private Animator animator;
+
+	private DirectionEnum _direction;
+
+	private DirectionEnum Direction{ 
+		set{
+			if (Direction != value && animator!=null)
+				this.animator.SetTrigger ("DirectionChanged");
+			_direction = value;
+		} 
+		get{
+			return _direction;
+		}
+	}
+
     // Use this for initialization
     void Start () {
-		
+		animator = GetComponent<Animator> ();
+		Direction = DirectionEnum.EAST;
 	}
 
     // Update is called once per frame
@@ -22,12 +38,15 @@ public class PlayerController : MonoBehaviour {
             {
                 Debug.Log("Right");
                 moveDirection = Vector2.right;
+				animator.SetInteger ("Direction", (int)(Direction = DirectionEnum.EAST));
             }
             else
             {
                 Debug.Log("Left");
-                moveDirection = Vector2.left;
+				moveDirection = Vector2.left;
+				animator.SetInteger ("Direction", (int)(Direction = DirectionEnum.WEST));
             }
+			animator.SetBool ("IsMoving", true);
         }
         float verticalInput = Input.GetAxis("Vertical");
         if (verticalInput != 0.0f)
@@ -35,13 +54,16 @@ public class PlayerController : MonoBehaviour {
             if (verticalInput > 0.0f)
             {
                 Debug.Log("Up");
-                moveDirection = Vector2.up;
+				moveDirection = Vector2.up;
+				animator.SetInteger ("Direction", (int)(Direction = DirectionEnum.NORTH));
             }
             else
             {
                 Debug.Log("Down");
-                moveDirection = Vector2.down;
-            }
+				moveDirection = Vector2.down;
+				animator.SetInteger ("Direction", (int)(Direction = DirectionEnum.SOUTH));
+			}
+			animator.SetBool ("IsMoving", true);
         }
 
     }
@@ -65,7 +87,15 @@ public class PlayerController : MonoBehaviour {
         Debug.Log("collision  " + collision.contacts[0].normal.ToString());
         if ((collision.contacts[0].normal + moveDirection).magnitude < 0.3f)
         {
-            moveDirection = Vector2.zero;
+			moveDirection = Vector2.zero;
+			animator.SetBool ("IsMoving", false);
         }
     }
+
+	private enum DirectionEnum{
+		EAST,
+		SOUTH,
+		WEST,
+		NORTH
+	}
 }
