@@ -36,13 +36,11 @@ public class PlayerController : MonoBehaviour {
         {
             if (horizontalInput > 0.0f)
             {
-                Debug.Log("Right");
                 moveDirection = Vector2.right;
 				animator.SetInteger ("Direction", (int)(Direction = DirectionEnum.EAST));
             }
             else
             {
-                Debug.Log("Left");
 				moveDirection = Vector2.left;
 				animator.SetInteger ("Direction", (int)(Direction = DirectionEnum.WEST));
             }
@@ -53,13 +51,11 @@ public class PlayerController : MonoBehaviour {
         {
             if (verticalInput > 0.0f)
             {
-                Debug.Log("Up");
 				moveDirection = Vector2.up;
 				animator.SetInteger ("Direction", (int)(Direction = DirectionEnum.NORTH));
             }
             else
             {
-                Debug.Log("Down");
 				moveDirection = Vector2.down;
 				animator.SetInteger ("Direction", (int)(Direction = DirectionEnum.SOUTH));
 			}
@@ -84,8 +80,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void HandleCollision2D(Collision2D collision) {
-        Debug.Log("collision  " + collision.contacts[0].normal.ToString());
-        if ((collision.contacts[0].normal + moveDirection).magnitude < 0.3f)
+		if ((collision.contacts[0].normal + moveDirection).magnitude < 0.3f)
         {
 			moveDirection = Vector2.zero;
 			animator.SetBool ("IsMoving", false);
