@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void HandleCollision2D(Collision2D collision) {
-		if ((collision.contacts[0].normal + moveDirection).magnitude < 0.3f)
+		if (collision.gameObject.CompareTag("Wall") && ((collision.contacts[0].normal + moveDirection).magnitude < 0.3f))
         {
 			moveDirection = Vector2.zero;
 			animator.SetBool ("IsMoving", false);
