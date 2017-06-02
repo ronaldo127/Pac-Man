@@ -86,11 +86,4 @@ public class PlayerController : MonoBehaviour {
 			animator.SetBool ("IsMoving", false);
         }
     }
-
-	private enum DirectionEnum{
-		EAST,
-		SOUTH,
-		WEST,
-		NORTH
-	}
 }
