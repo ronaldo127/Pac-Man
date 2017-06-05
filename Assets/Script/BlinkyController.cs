@@ -53,6 +53,9 @@ public class BlinkyController : MonoBehaviour {
 
 	protected void ChooseDirection(){
 
+		SortedList<int ,PathNode> priorityQueue = new SortedList<int, PathNode>();
+
+
 
 
 		Vector3 diff = target.transform.position - transform.position;
