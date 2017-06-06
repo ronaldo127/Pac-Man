@@ -23,6 +23,8 @@ public class BlinkyController : MonoBehaviour {
 
 	private Vector3 targetPosition;
 
+	private PathNode nextNode;
+
 	// Use this for initialization
 	void Start () {
 		target = GameObject.FindObjectOfType<PlayerController> ();
@@ -129,11 +131,15 @@ public class BlinkyController : MonoBehaviour {
 				}
 			}
 		}
-
-		while (path.parent != thisNode) {
-			print ("reverse path: " + path.pathCross.name);
-			path.Use ();
-			path = path.parent;
+		if (path == null) {
+			path = nextNode;
+		} else {
+			while (path.parent != thisNode) {
+				print ("reverse path: " + path.pathCross.name);
+				path.Use ();
+				nextNode = path;
+				path = path.parent;
+			}
 		}
 		print ("reverse path: " + path.pathCross.name);
 		path.Use ();
@@ -147,6 +153,8 @@ public class BlinkyController : MonoBehaviour {
 			moveDirection = horizontalComponent.normalized;
 		}
 		print (moveDirection);
+		//Vector2 temp = (Vector2)path.pathCross.transform.position;
+		//this.transform.position = (Vector3)Physics2D.Raycast (temp - moveDirection, -((Vector2)moveDirection), 10.0f, layer).collider.transform.position;
 		isChoosingPath = false;
 	}
 }
