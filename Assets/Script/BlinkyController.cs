@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BlinkyController : MonoBehaviour {
 	
@@ -21,7 +22,6 @@ public class BlinkyController : MonoBehaviour {
 	private bool isChoosingPath = false;
 
 	private Vector3 targetPosition;
-
 
 	// Use this for initialization
 	void Start () {
@@ -63,8 +63,9 @@ public class BlinkyController : MonoBehaviour {
 	}
 
 	private void HandleTrigger2D(Collider2D collider) {
-		if (collider.gameObject.CompareTag ("Cross")&&(collider.transform.position-transform.position).magnitude<.5f&&!isChoosingPath) {
-			ChooseDirection (collider.name);
+		if (collider.gameObject.CompareTag ("Cross")&&(collider.transform.position-transform.position).magnitude<.5f) {
+			if (!isChoosingPath)
+				ChooseDirection (collider.name);
 		}
 	}
 
@@ -95,10 +96,12 @@ public class BlinkyController : MonoBehaviour {
 			PathNode currentNode = priorityQueue.Values [0];
 			priorityQueue.RemoveAt (0);
 			print ("Current node: "+currentNode.pathCross.name+" "+currentNode.pathCross.transform.position.ToString()+" "+currentNode.cost);
+			if (path!=null && path.cost<currentNode.cost)
+				continue;
 			if (currentNode.pathCross.CompareTag ("Player") && (path == null || currentNode.cost < path.cost)) {
 				path = currentNode;
 			} else {
-				foreach (Vector2 direction in directions) {
+				foreach (Vector2 direction in currentNode.Directions) {
 					Transform currentNodeTransform = currentNode.pathCross.transform;
 					Collider2D collider = Physics2D.Raycast ((Vector2)currentNodeTransform.position+direction, 
 						direction, 25.0f, layer).collider;
@@ -112,8 +115,11 @@ public class BlinkyController : MonoBehaviour {
 									nextPos = targetPosition;
 								else
 									nextPos = collider.transform.position;
+								float newCost = currentNode.cost + (collider.transform.position - prevPos).magnitude;
+								if (path!=null && path.cost<newCost)
+									continue;
 								node.isOpen = false;
-								node.cost = currentNode.cost + (collider.transform.position - prevPos).magnitude;
+								node.cost = newCost;
 								node.parent = currentNode;
 								print ("Adding: "+node.pathCross.name+" "+node.pathCross.transform.position.ToString()+" "+node.cost);
 								priorityQueue.Add (node, node);
