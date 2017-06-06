@@ -39,7 +39,9 @@ public class PathNode: IComparable<PathNode>
 
 	public void Clear(){
 		if (pathCross.CompareTag ("Cross")) {
-			pathCross.GetComponent<PathCross> ().isPath = false;
+			PathCross temp = pathCross.GetComponent<PathCross> ();
+			if (temp)
+				temp.isPath = false;
 		}
 	}
 	public void Use(){

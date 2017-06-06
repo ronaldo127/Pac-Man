@@ -16,10 +16,11 @@ public class BlinkyController : MonoBehaviour {
 
 	private PathCross[] pathCrosses;
 
-	private Dictionary<string, PathNode> pathNodes;
+	private Hashtable pathNodes;
 
 	private bool isChoosingPath = false;
 
+	private Vector3 targetPosition;
 
 
 	// Use this for initialization
@@ -32,7 +33,7 @@ public class BlinkyController : MonoBehaviour {
 
 	protected void ClearPathNodes(){
 		if (pathNodes == null) {
-			pathNodes = new Dictionary<string, PathNode> ();
+			pathNodes = new Hashtable ();
 			foreach (PathCross path in pathCrosses) {
 				pathNodes.Add (path.name, new PathNode(path.gameObject));
 			}
@@ -40,11 +41,14 @@ public class BlinkyController : MonoBehaviour {
 			pathNodes.Add (target.name, new PathNode (target.gameObject));
 		}
 		foreach (PathNode node in pathNodes.Values) {
-			node.isOpen = true;
-			node.cost = 0.0f;
-			node.parent = null;
-			node.Clear ();
+			if (!node.isOpen) {
+				node.isOpen = true;
+				node.cost = 0.0f;
+				node.parent = null;
+				node.Clear ();
+			}
 		}
+		targetPosition = target.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -78,9 +82,9 @@ public class BlinkyController : MonoBehaviour {
 
 		Vector2[] directions = new Vector2[]{Vector2.up, Vector2.right, Vector2.down, Vector2.left};
 
-		pathNodes [currentTrigger].isOpen = false;
+		((PathNode)pathNodes [currentTrigger]).isOpen = false;
 
-		PathNode thisNode = pathNodes [this.name];
+		PathNode thisNode = ((PathNode)pathNodes [this.name]);
 		thisNode.isOpen = false;
 		thisNode.cost = 0;
 		thisNode.parent = null;
@@ -91,23 +95,29 @@ public class BlinkyController : MonoBehaviour {
 			PathNode currentNode = priorityQueue.Values [0];
 			priorityQueue.RemoveAt (0);
 			print ("Current node: "+currentNode.pathCross.name+" "+currentNode.pathCross.transform.position.ToString()+" "+currentNode.cost);
-			if (currentNode.pathCross.CompareTag ("Player") && (path==null || currentNode.cost<path.cost)) {
+			if (currentNode.pathCross.CompareTag ("Player") && (path == null || currentNode.cost < path.cost)) {
 				path = currentNode;
-			}
-			foreach (Vector2 direction in directions) {
-				Transform currentNodeTransform = currentNode.pathCross.transform;
-				Collider2D collider = Physics2D.Raycast ((Vector2)currentNodeTransform.position+direction, 
-															direction, 30.0f, layer).collider;
-				Vector3 prevPos = currentNode.pathCross.transform.position;
-				if (collider) {
-					if (pathNodes.ContainsKey(collider.name)){
-						PathNode node = pathNodes [collider.name];
-						if (node.isOpen) {
-							node.isOpen = false;
-							node.cost = currentNode.cost + (collider.transform.position - prevPos).magnitude;
-							node.parent = currentNode;
-							print ("Adding: "+node.pathCross.name+" "+node.pathCross.transform.position.ToString()+" "+node.cost);
-							priorityQueue.Add (node, node);
+			} else {
+				foreach (Vector2 direction in directions) {
+					Transform currentNodeTransform = currentNode.pathCross.transform;
+					Collider2D collider = Physics2D.Raycast ((Vector2)currentNodeTransform.position+direction, 
+						direction, 25.0f, layer).collider;
+					Vector3 prevPos = currentNode.pathCross.transform.position;
+					if (collider) {
+						Vector3 nextPos;
+						if (collider.tag.Equals("Cross") || collider.tag.Equals("Player")){
+							PathNode node = ((PathNode)pathNodes [collider.name]);
+							if (node.isOpen) {
+								if (collider.tag.Equals ("Player"))
+									nextPos = targetPosition;
+								else
+									nextPos = collider.transform.position;
+								node.isOpen = false;
+								node.cost = currentNode.cost + (collider.transform.position - prevPos).magnitude;
+								node.parent = currentNode;
+								print ("Adding: "+node.pathCross.name+" "+node.pathCross.transform.position.ToString()+" "+node.cost);
+								priorityQueue.Add (node, node);
+							}
 						}
 					}
 				}
