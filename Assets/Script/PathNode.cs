@@ -12,7 +12,11 @@ public class PathNode: IComparable<PathNode>
 
 	public float cost;
 
+	public float heuristic;
+
 	public Vector2[] Directions;
+
+	public float value {get{ return cost + heuristic;}}
 
 	public Vector3 Position{
 		get{
@@ -50,9 +54,9 @@ public class PathNode: IComparable<PathNode>
 	}
 
 	public int CompareTo(PathNode other){
-		if (other.cost > this.cost)
+		if (other.value > this.value)
 			return -1;
-		else if (other.cost < this.cost)
+		else if (other.value < this.value)
 			return 1;
 		else {
 			if (other == this)

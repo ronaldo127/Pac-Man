@@ -107,10 +107,9 @@ public class BlinkyController : MonoBehaviour {
 			PathNode currentNode = priorityQueue.Values [0];
 			priorityQueue.RemoveAt (0);
 			print ("Current node: "+currentNode.pathCross.name+" "+currentNode.Position.ToString()+" "+currentNode.cost);
-			if (path!=null && path.cost<currentNode.cost)
-				continue;
-			if (currentNode==targetNode && (path == null || currentNode.cost < path.cost)) {
+			if (currentNode==targetNode && (path == null || currentNode.value < path.value)) {
 				path = currentNode;
+				break;
 			} else {
 				foreach (Vector2 direction in currentNode.Directions) {
 					Transform currentNodeTransform = currentNode.pathCross.transform;
@@ -125,13 +124,13 @@ public class BlinkyController : MonoBehaviour {
 								if (collider.tag.Equals ("Player"))
 									nextPos = targetPosition;
 								else
-									nextPos = collider.transform.position;
+									nextPos = node.Position;
 								float newCost = currentNode.cost + (node.Position - prevPos).magnitude;
-								if (path!=null && path.cost<newCost)
-									continue;
-								node.Close();
 								node.cost = newCost;
+								Vector2 diff = targetPosition - node.Position;
+								node.heuristic = Mathf.Abs(diff.x) + Mathf.Abs(diff.y);
 								node.parent = currentNode;
+								node.Close();
 								print ("Adding: "+node.pathCross.name+" "+node.Position.ToString()+" "+node.cost);
 								priorityQueue.Add (node, node);
 							}
