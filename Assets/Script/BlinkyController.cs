@@ -25,6 +25,10 @@ public class BlinkyController : MonoBehaviour {
 
 	private Stack<PathNode> pathStack;
 
+	private string lastMarkerName;
+
+	private PathNode targetNode;
+
 	public bool reverse;
 
 	// Use this for initialization
@@ -41,7 +45,8 @@ public class BlinkyController : MonoBehaviour {
 				pathNodes.Add (path.name, new PathNode(path.gameObject));
 			}
 			pathNodes.Add (this.name, new PathNode (this.gameObject));
-			pathNodes.Add (target.name, new PathNode (target.gameObject));
+			targetNode = new PathNode (target.gameObject);
+			pathNodes.Add (target.name, targetNode);
 			pathStack = new Stack<PathNode> ();
 		}
 		foreach (PathNode node in pathNodes.Values) {
@@ -69,8 +74,10 @@ public class BlinkyController : MonoBehaviour {
 
 	private void HandleTrigger2D(Collider2D collider) {
 		if (collider.gameObject.CompareTag ("Cross")&&(collider.transform.position-this.transform.position).magnitude<.5f) {
-			if (!isChoosingPath)
+			if (!isChoosingPath && collider.name != lastMarkerName) {
 				ChooseDirection (this.name, collider.name);
+				lastMarkerName = collider.name;
+			}
 		}
 	}
 
@@ -102,7 +109,7 @@ public class BlinkyController : MonoBehaviour {
 			print ("Current node: "+currentNode.pathCross.name+" "+currentNode.Position.ToString()+" "+currentNode.cost);
 			if (path!=null && path.cost<currentNode.cost)
 				continue;
-			if (currentNode.pathCross.CompareTag ("Player") && (path == null || currentNode.cost < path.cost)) {
+			if (currentNode==targetNode && (path == null || currentNode.cost < path.cost)) {
 				path = currentNode;
 			} else {
 				foreach (Vector2 direction in currentNode.Directions) {
@@ -134,8 +141,17 @@ public class BlinkyController : MonoBehaviour {
 			}
 		}
 		if (path == null) {
-			if (pathStack.Count>0)
-				path = pathStack.Pop();
+			if (pathStack.Count > 0)
+				path = pathStack.Pop ();
+			else {
+				path = (PathNode)pathNodes[markerName];
+				List<Vector2> possibleDirections = new List<Vector2> ();
+				foreach (Vector2 direction in path.Directions) {
+					possibleDirections.Add(direction);
+				}
+				moveDirection = possibleDirections[UnityEngine.Random.Range(0, possibleDirections.Count)];
+				return;
+			}
 		} else {
 			pathStack.Clear ();
 			while (path.parent != thisNode) {
