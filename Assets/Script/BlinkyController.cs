@@ -25,6 +25,8 @@ public class BlinkyController : MonoBehaviour {
 
 	private Stack<PathNode> pathStack;
 
+	public bool reverse;
+
 	// Use this for initialization
 	void Start () {
 		target = GameObject.FindObjectOfType<PlayerController> ();
@@ -68,7 +70,7 @@ public class BlinkyController : MonoBehaviour {
 	private void HandleTrigger2D(Collider2D collider) {
 		if (collider.gameObject.CompareTag ("Cross")&&(collider.transform.position-this.transform.position).magnitude<.5f) {
 			if (!isChoosingPath)
-				ChooseDirection (this.name);
+				ChooseDirection (this.name, collider.name);
 		}
 	}
 
@@ -78,7 +80,7 @@ public class BlinkyController : MonoBehaviour {
 		transform.position += new Vector3(moveDirection.x, moveDirection.y) * speed * Time.deltaTime;
 	}
 
-	protected void ChooseDirection(string currentTrigger){
+	protected void ChooseDirection(string currentTrigger, string markerName){
 		isChoosingPath = true;
 		ClearPathNodes ();
 
@@ -153,6 +155,18 @@ public class BlinkyController : MonoBehaviour {
 			moveDirection = verticalComponent.normalized;
 		} else {
 			moveDirection = horizontalComponent.normalized;
+		}
+		if (reverse) {
+			path = (PathNode)pathNodes[markerName];
+			List<Vector2> possibleDirections = new List<Vector2> ();
+			foreach (Vector2 direction in path.Directions) {
+				if (direction.Equals (moveDirection)) {
+					continue;
+				} else {
+					possibleDirections.Add(direction);
+				}
+			}
+			moveDirection = possibleDirections[UnityEngine.Random.Range(0, possibleDirections.Count)];
 		}
 		print (moveDirection);
 		//Vector2 temp = (Vector2)path.pathCross.transform.position;
