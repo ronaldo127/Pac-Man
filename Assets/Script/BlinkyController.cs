@@ -30,7 +30,6 @@ public class BlinkyController : MonoBehaviour {
 		target = GameObject.FindObjectOfType<PlayerController> ();
 //		animator = GetComponent<Animator> ();
 		pathCrosses = GameObject.FindObjectsOfType<PathCross> ();
-		ChooseDirection (this.name);
 	}
 
 	protected void ClearPathNodes(){
@@ -59,15 +58,15 @@ public class BlinkyController : MonoBehaviour {
 
 
 
-	private void OnTriggerStay2D(Collider2D collision)
+	void OnTriggerStay2D(Collider2D collision)
 	{
 		HandleTrigger2D(collision);
 	}
 
 	private void HandleTrigger2D(Collider2D collider) {
-		if (collider.gameObject.CompareTag ("Cross")&&(collider.transform.position-transform.position).magnitude<.5f) {
+		if (collider.gameObject.CompareTag ("Cross")) {
 			if (!isChoosingPath)
-				ChooseDirection (collider.name);
+				ChooseDirection (this.name);
 		}
 	}
 
@@ -83,7 +82,6 @@ public class BlinkyController : MonoBehaviour {
 
 		SortedList<PathNode, PathNode> priorityQueue = new SortedList<PathNode, PathNode>();
 
-		Vector2[] directions = new Vector2[]{Vector2.up, Vector2.right, Vector2.down, Vector2.left};
 
 		((PathNode)pathNodes [currentTrigger]).isOpen = false;
 
@@ -120,7 +118,7 @@ public class BlinkyController : MonoBehaviour {
 								float newCost = currentNode.cost + (collider.transform.position - prevPos).magnitude;
 								if (path!=null && path.cost<newCost)
 									continue;
-								node.isOpen = false;
+								node.Close();
 								node.cost = newCost;
 								node.parent = currentNode;
 								print ("Adding: "+node.pathCross.name+" "+node.pathCross.transform.position.ToString()+" "+node.cost);

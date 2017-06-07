@@ -5,7 +5,7 @@ using UnityEngine;
 public class PathCross : MonoBehaviour {
 	public LayerMask layer;
 	public PathCross[] adjacents;
-	public bool IsPath{ set; get;}
+	public Color Color = Color.white;
 
 	// Use this for initialization
 	void Start () {
@@ -29,6 +29,7 @@ public class PathCross : MonoBehaviour {
 		}
 
 		adjacents = list.ToArray ();
+
 		
 	}
 	
@@ -38,8 +39,7 @@ public class PathCross : MonoBehaviour {
 	}
 
 	void OnDrawGizmos(){
-		if (IsPath)
-			Gizmos.color = Color.red;
+		Gizmos.color = this.Color;
 		Gizmos.DrawWireCube (transform.position,transform.localScale);
 	}
 }

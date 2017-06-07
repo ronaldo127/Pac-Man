@@ -58,13 +58,26 @@ public class PathNode: IComparable<PathNode>
 	public void Clear(){
 		if (pathCross.CompareTag ("Cross")) {
 			PathCross temp = pathCross.GetComponent<PathCross> ();
-			if (temp)
-				temp.IsPath = false;
+			if (temp) {
+				temp.Color = Color.white;
+			}
 		}
 	}
 	public void Use(){
 		if (pathCross.CompareTag ("Cross")) {
-			pathCross.GetComponent<PathCross> ().IsPath = true;
+			PathCross temp = pathCross.GetComponent<PathCross> ();
+			if (temp) {
+				temp.Color = Color.green;
+			}
+		}
+	}
+	public void Close(){
+		isOpen = false;
+		if (pathCross.CompareTag ("Cross")) {
+			PathCross temp = pathCross.GetComponent<PathCross> ();
+			if (temp) {
+				temp.Color = Color.red;
+			}
 		}
 	}
 }
