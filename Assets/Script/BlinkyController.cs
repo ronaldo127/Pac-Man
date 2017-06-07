@@ -23,7 +23,7 @@ public class BlinkyController : MonoBehaviour {
 
 	private Vector3 targetPosition;
 
-	private PathNode nextNode;
+	private Stack<PathNode> pathStack;
 
 	// Use this for initialization
 	void Start () {
@@ -40,6 +40,7 @@ public class BlinkyController : MonoBehaviour {
 			}
 			pathNodes.Add (this.name, new PathNode (this.gameObject));
 			pathNodes.Add (target.name, new PathNode (target.gameObject));
+			pathStack = new Stack<PathNode> ();
 		}
 		foreach (PathNode node in pathNodes.Values) {
 			if (!node.isOpen) {
@@ -50,6 +51,7 @@ public class BlinkyController : MonoBehaviour {
 			}
 		}
 		targetPosition = target.transform.position;
+		targetPosition = new Vector3 (Mathf.Round(targetPosition.x), Mathf.Round(targetPosition.y));
 	}
 	
 	// Update is called once per frame
@@ -64,7 +66,7 @@ public class BlinkyController : MonoBehaviour {
 	}
 
 	private void HandleTrigger2D(Collider2D collider) {
-		if (collider.gameObject.CompareTag ("Cross")) {
+		if (collider.gameObject.CompareTag ("Cross")&&(collider.transform.position-this.transform.position).magnitude<.5f) {
 			if (!isChoosingPath)
 				ChooseDirection (this.name);
 		}
@@ -95,7 +97,7 @@ public class BlinkyController : MonoBehaviour {
 		while(priorityQueue.Count>0){
 			PathNode currentNode = priorityQueue.Values [0];
 			priorityQueue.RemoveAt (0);
-			print ("Current node: "+currentNode.pathCross.name+" "+currentNode.pathCross.transform.position.ToString()+" "+currentNode.cost);
+			print ("Current node: "+currentNode.pathCross.name+" "+currentNode.Position.ToString()+" "+currentNode.cost);
 			if (path!=null && path.cost<currentNode.cost)
 				continue;
 			if (currentNode.pathCross.CompareTag ("Player") && (path == null || currentNode.cost < path.cost)) {
@@ -103,9 +105,9 @@ public class BlinkyController : MonoBehaviour {
 			} else {
 				foreach (Vector2 direction in currentNode.Directions) {
 					Transform currentNodeTransform = currentNode.pathCross.transform;
-					Collider2D collider = Physics2D.Raycast ((Vector2)currentNodeTransform.position+direction, 
+					Collider2D collider = Physics2D.Raycast ((Vector2)currentNode.Position+direction, 
 						direction, 25.0f, layer).collider;
-					Vector3 prevPos = currentNode.pathCross.transform.position;
+					Vector3 prevPos = currentNode.Position;
 					if (collider) {
 						Vector3 nextPos;
 						if (collider.tag.Equals("Cross") || collider.tag.Equals("Player")){
@@ -115,13 +117,13 @@ public class BlinkyController : MonoBehaviour {
 									nextPos = targetPosition;
 								else
 									nextPos = collider.transform.position;
-								float newCost = currentNode.cost + (collider.transform.position - prevPos).magnitude;
+								float newCost = currentNode.cost + (node.Position - prevPos).magnitude;
 								if (path!=null && path.cost<newCost)
 									continue;
 								node.Close();
 								node.cost = newCost;
 								node.parent = currentNode;
-								print ("Adding: "+node.pathCross.name+" "+node.pathCross.transform.position.ToString()+" "+node.cost);
+								print ("Adding: "+node.pathCross.name+" "+node.Position.ToString()+" "+node.cost);
 								priorityQueue.Add (node, node);
 							}
 						}
@@ -130,12 +132,14 @@ public class BlinkyController : MonoBehaviour {
 			}
 		}
 		if (path == null) {
-			path = nextNode;
+			if (pathStack.Count>0)
+				path = pathStack.Pop();
 		} else {
+			pathStack.Clear ();
 			while (path.parent != thisNode) {
 				print ("reverse path: " + path.pathCross.name);
 				path.Use ();
-				nextNode = path;
+				pathStack.Push (path);
 				path = path.parent;
 			}
 		}

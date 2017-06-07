@@ -14,6 +14,12 @@ public class PathNode: IComparable<PathNode>
 
 	public Vector2[] Directions;
 
+	public Vector3 Position{
+		get{
+			return new Vector3 (Mathf.Round (pathCross.transform.position.x), Mathf.Round (pathCross.transform.position.y));
+		}
+	}
+
 	public PathNode(){
 		Directions = new Vector2[]{Vector2.up, Vector2.right, Vector2.down, Vector2.left};
 	}
