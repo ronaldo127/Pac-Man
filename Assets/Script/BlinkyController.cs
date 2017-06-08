@@ -7,13 +7,13 @@ public class BlinkyController : MonoBehaviour {
 	
 	public float speed = 1.0f;
 
-//	private Animator animator;
-
 	protected PlayerController target;
 
 	public Vector2 moveDirection = Vector2.right;
 
 	public LayerMask layer;
+
+	public bool reverse;
 
 	private PathCross[] pathCrosses;
 
@@ -29,12 +29,12 @@ public class BlinkyController : MonoBehaviour {
 
 	private PathNode targetNode;
 
-	public bool reverse;
+	private Animator animator;
 
 	// Use this for initialization
 	void Start () {
 		target = GameObject.FindObjectOfType<PlayerController> ();
-//		animator = GetComponent<Animator> ();
+		animator = GetComponent<Animator> ();
 		pathCrosses = GameObject.FindObjectsOfType<PathCross> ();
 	}
 
@@ -72,12 +72,28 @@ public class BlinkyController : MonoBehaviour {
 		HandleTrigger2D(collision);
 	}
 
+
 	private void HandleTrigger2D(Collider2D collider) {
 		if (collider.gameObject.CompareTag ("Cross")&&(collider.transform.position-this.transform.position).magnitude<.5f) {
 			if (!isChoosingPath && collider.name != lastMarkerName) {
 				ChooseDirection (this.name, collider.name);
 				lastMarkerName = collider.name;
 			}
+			lastMarkerName = collider.name;
+		}
+	}
+
+	private void GoToNextDirection(){
+		if (pathStack == null || pathStack.Count < 1)
+			return;
+		PathNode path = pathStack.Pop ();
+		Vector3 diff2 = path.pathCross.transform.position - transform.position;
+		Vector3 verticalComponent = Vector3.Project (diff2, Vector3.up);
+		Vector3 horizontalComponent = Vector3.Project (diff2, Vector3.right);
+		if (verticalComponent.magnitude > horizontalComponent.magnitude) {
+			moveDirection = verticalComponent.normalized;
+		} else {
+			moveDirection = horizontalComponent.normalized;
 		}
 	}
 
@@ -89,6 +105,7 @@ public class BlinkyController : MonoBehaviour {
 
 	protected void ChooseDirection(string currentTrigger, string markerName){
 		isChoosingPath = true;
+		bool isReversed = reverse;
 		ClearPathNodes ();
 
 		SortedList<PathNode, PathNode> priorityQueue = new SortedList<PathNode, PathNode>();
@@ -104,8 +121,14 @@ public class BlinkyController : MonoBehaviour {
 
 		PathNode path = null;
 		while(priorityQueue.Count>0){
-			PathNode currentNode = priorityQueue.Values [0];
-			priorityQueue.RemoveAt (0);
+			PathNode currentNode;
+			if (isReversed) {
+				currentNode = priorityQueue.Values [priorityQueue.Values.Count-1];
+				priorityQueue.RemoveAt (priorityQueue.Values.Count-1);
+			} else {
+				currentNode = priorityQueue.Values [0];
+				priorityQueue.RemoveAt (0);
+			}
 			print ("Current node: "+currentNode.pathCross.name+" "+currentNode.Position.ToString()+" "+currentNode.cost);
 			if (currentNode==targetNode && (path == null || currentNode.value < path.value)) {
 				path = currentNode;
@@ -171,30 +194,24 @@ public class BlinkyController : MonoBehaviour {
 		} else {
 			moveDirection = horizontalComponent.normalized;
 		}
-		if (reverse) {
-			path = (PathNode)pathNodes[markerName];
-			List<Vector2> possibleDirections = new List<Vector2> ();
-			foreach (Vector2 direction in path.Directions) {
-				if (direction.Equals (moveDirection)) {
-					continue;
-				} else {
-					possibleDirections.Add(direction);
-				}
-			}
-			moveDirection = possibleDirections[UnityEngine.Random.Range(0, possibleDirections.Count)];
-		}
+		this.transform.position = ((PathNode)pathNodes [markerName]).pathCross.transform.position;
 		print (moveDirection);
-		//Vector2 temp = (Vector2)path.pathCross.transform.position;
-		//this.transform.position = (Vector3)Physics2D.Raycast (temp - moveDirection, -((Vector2)moveDirection), 10.0f, layer).collider.transform.position;
 		isChoosingPath = false;
 	}
 
 	public void Reverse(){
+		if (reverse){
+			CancelInvoke ("Follow");
+		}
 		reverse = true;
+		animator.SetBool ("Reverse", reverse);
+		//ChooseDirection (this.name, lastMarkerName);
 		Invoke ("Follow", 5.0f);
 	}
 
 	private void Follow(){
 		reverse = false;
+		animator.SetBool ("Reverse", reverse);
+		//ChooseDirection (this.name, lastMarkerName);
 	}
 }
