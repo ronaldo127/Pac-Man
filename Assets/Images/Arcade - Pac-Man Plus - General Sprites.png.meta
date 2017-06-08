@@ -1,9 +1,13 @@
 fileFormatVersion: 2
-guid: 8ef69098389b4a04cbf5704c4386f027
-timeCreated: 1495481044
+guid: 3fb14b4fe3c4c43bdaeedfa5f52c5ed3
+timeCreated: 1496887995
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Arcade - Pac-Man Plus - General Sprites_0
+    21300002: Arcade - Pac-Man Plus - General Sprites_1
+    21300004: Arcade - Pac-Man Plus - General Sprites_2
+    21300006: Arcade - Pac-Man Plus - General Sprites_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -34,7 +38,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -84,7 +88,59 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Arcade - Pac-Man Plus - General Sprites_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 216
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Arcade - Pac-Man Plus - General Sprites_1
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 124
+        width: 340
+        height: 124
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Arcade - Pac-Man Plus - General Sprites_2
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 211
+        width: 2
+        height: 2
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Arcade - Pac-Man Plus - General Sprites_3
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 0
+        width: 340
+        height: 124
+      alignment: 3
+      pivot: {x: 1, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 
