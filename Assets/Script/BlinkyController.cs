@@ -188,4 +188,13 @@ public class BlinkyController : MonoBehaviour {
 		//this.transform.position = (Vector3)Physics2D.Raycast (temp - moveDirection, -((Vector2)moveDirection), 10.0f, layer).collider.transform.position;
 		isChoosingPath = false;
 	}
+
+	public void Reverse(){
+		reverse = true;
+		Invoke ("Follow", 5.0f);
+	}
+
+	private void Follow(){
+		reverse = false;
+	}
 }
