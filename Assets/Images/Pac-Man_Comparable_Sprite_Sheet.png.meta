@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 05e885b4586824d0eb2238c930c8acaa
-timeCreated: 1496864432
+timeCreated: 1496936717
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -735,10 +735,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_57
       rect:
         serializedVersion: 2
-        x: 19
-        y: 80
-        width: 16
-        height: 16
+        x: 20
+        y: 81
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -748,10 +748,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_58
       rect:
         serializedVersion: 2
-        x: 35
-        y: 80
-        width: 16
-        height: 16
+        x: 36
+        y: 81
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -761,10 +761,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_59
       rect:
         serializedVersion: 2
-        x: 51
-        y: 80
-        width: 16
-        height: 16
+        x: 52
+        y: 81
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -774,10 +774,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_60
       rect:
         serializedVersion: 2
-        x: 67
-        y: 80
-        width: 16
-        height: 16
+        x: 68
+        y: 81
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -787,10 +787,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_61
       rect:
         serializedVersion: 2
-        x: 83
-        y: 80
-        width: 16
-        height: 16
+        x: 84
+        y: 81
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -800,10 +800,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_62
       rect:
         serializedVersion: 2
-        x: 99
-        y: 80
-        width: 16
-        height: 16
+        x: 100
+        y: 81
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -813,10 +813,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_63
       rect:
         serializedVersion: 2
-        x: 115
-        y: 80
-        width: 16
-        height: 16
+        x: 116
+        y: 81
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -826,10 +826,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_64
       rect:
         serializedVersion: 2
-        x: 131
-        y: 80
-        width: 16
-        height: 16
+        x: 132
+        y: 81
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -839,10 +839,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_65
       rect:
         serializedVersion: 2
-        x: 147
-        y: 80
-        width: 16
-        height: 16
+        x: 148
+        y: 81
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -852,10 +852,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_66
       rect:
         serializedVersion: 2
-        x: 163
-        y: 80
-        width: 16
-        height: 16
+        x: 164
+        y: 81
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -865,10 +865,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_67
       rect:
         serializedVersion: 2
-        x: 179
-        y: 80
-        width: 16
-        height: 16
+        x: 180
+        y: 81
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
