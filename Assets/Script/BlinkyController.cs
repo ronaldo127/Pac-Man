@@ -7,13 +7,15 @@ public class BlinkyController : MonoBehaviour {
 	
 	public float speed = 1.0f;
 
-	protected PlayerController target;
-
 	public Vector2 moveDirection = Vector2.right;
 
 	public LayerMask layer;
 
-	public bool reverse;
+	public bool isReverse;
+
+	public PathCross respawn;
+
+	protected PlayerController target;
 
 	private PathCross[] pathCrosses;
 
@@ -30,6 +32,8 @@ public class BlinkyController : MonoBehaviour {
 	private PathNode targetNode;
 
 	private Animator animator;
+
+	private bool isDead;
 
 	// Use this for initialization
 	void Start () {
@@ -57,7 +61,7 @@ public class BlinkyController : MonoBehaviour {
 				node.Clear ();
 			}
 		}
-		targetPosition = target.transform.position;
+		targetPosition = targetNode.pathCross.transform.position;
 		targetPosition = new Vector3 (Mathf.Round(targetPosition.x), Mathf.Round(targetPosition.y));
 	}
 	
@@ -80,7 +84,29 @@ public class BlinkyController : MonoBehaviour {
 				lastMarkerName = collider.name;
 			}
 			lastMarkerName = collider.name;
+			if (collider.name == targetNode.pathCross.name) {
+				Respawn();
+			}
 		}
+		if (collider.gameObject.CompareTag("Player")) {
+			if (!isDead && isReverse) {
+				Die ();
+			}
+		}
+	}
+
+	private void Die(){
+		isDead = true;
+		targetNode = (PathNode)pathNodes [respawn.name];
+		isReverse = false;
+		animator.SetBool ("Dead", isDead);
+	}
+
+	private void Respawn(){
+		isDead = false;
+		Follow ();
+		targetNode = (PathNode)pathNodes [target.name];
+		animator.SetBool ("Dead", isDead);
 	}
 
 	private void GoToNextDirection(){
@@ -105,7 +131,7 @@ public class BlinkyController : MonoBehaviour {
 
 	protected void ChooseDirection(string currentTrigger, string markerName){
 		isChoosingPath = true;
-		bool isReversed = reverse;
+		bool isReversed = this.isReverse;
 		ClearPathNodes ();
 
 		SortedList<PathNode, PathNode> priorityQueue = new SortedList<PathNode, PathNode>();
@@ -200,18 +226,18 @@ public class BlinkyController : MonoBehaviour {
 	}
 
 	public void Reverse(){
-		if (reverse){
+		if (isReverse){
 			CancelInvoke ("Follow");
 		}
-		reverse = true;
-		animator.SetBool ("Reverse", reverse);
+		isReverse = true;
+		animator.SetBool ("Reverse", isReverse);
 		//ChooseDirection (this.name, lastMarkerName);
 		Invoke ("Follow", 5.0f);
 	}
 
 	private void Follow(){
-		reverse = false;
-		animator.SetBool ("Reverse", reverse);
+		isReverse = false;
+		animator.SetBool ("Reverse", isReverse);
 		//ChooseDirection (this.name, lastMarkerName);
 	}
 }
