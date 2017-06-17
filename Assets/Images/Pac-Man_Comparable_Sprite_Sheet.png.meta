@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 05e885b4586824d0eb2238c930c8acaa
-timeCreated: 1496936717
+timeCreated: 1497456883
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -982,10 +982,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_78
       rect:
         serializedVersion: 2
-        x: 131
-        y: 64
-        width: 16
-        height: 16
+        x: 132
+        y: 65
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -995,10 +995,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_79
       rect:
         serializedVersion: 2
-        x: 147
-        y: 64
-        width: 16
-        height: 16
+        x: 148
+        y: 65
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1008,10 +1008,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_80
       rect:
         serializedVersion: 2
-        x: 163
-        y: 64
-        width: 16
-        height: 16
+        x: 164
+        y: 65
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1021,10 +1021,10 @@ TextureImporter:
       name: Pac-Man_Comparable_Sprite_Sheet_81
       rect:
         serializedVersion: 2
-        x: 179
-        y: 64
-        width: 16
-        height: 16
+        x: 180
+        y: 65
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
